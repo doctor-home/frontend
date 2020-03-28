@@ -1,1 +1,27 @@
-<p>patients works!</p>
+<div class="container">
+	<h1> Patients for |name| </h1>
+
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col" sortable="Name" (sort)="onSort($event)">Name</th>
+				<th scope="col" sortable="Treated" (sort)="onSort($event)">Treated</th>
+				<th scope="col" sortable="MLTriage" (sort)="onSort($event)">ML Triage</th>
+				<th scope="col" sortable="LastReportDate" (sort)="onSort($event)">Last Report Date</th>
+				<th scope="col" sortable="LastReportHeartRate" (sort)="onSort($event)">Last Report Heart Rate</th>
+				<th scope="col" sortable="LastReportOxygenation" (sort)="onSort($event)">Last Report Oxygenation</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let patient of sortedPatients">
+				<td>{{patient.Name}}</td>
+				<td>{{patient.Treated ? "Yes" : "No" }}</td>
+				<td>{{patient.MLTriage }}</td>
+				<td>{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
+				<td>{{patient.LastReport ? patient.LastReport.HearthRate + " BPM" : "n.a" }}</td>
+				<td>{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
