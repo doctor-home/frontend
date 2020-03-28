@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
@@ -12,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { PatientsComponent, NgbdSortableHeader } from './patients/patients.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
+import { HealthChartComponent } from './health-chart/health-chart.component';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { PatientDetailsComponent } from './patient-details/patient-details.compo
 		PatientsComponent,
 		NgbdSortableHeader,
 		OrganizationsComponent,
-		PatientDetailsComponent
+		PatientDetailsComponent,
+		HealthChartComponent
 	],
 	imports: [
 		RouterModule.forRoot(ROUTES),
@@ -30,6 +33,7 @@ import { PatientDetailsComponent } from './patient-details/patient-details.compo
 		BrowserModule,
 		FormsModule,
 		ReactiveFormsModule,
+		ChartsModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

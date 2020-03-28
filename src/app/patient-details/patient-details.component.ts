@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { Patient } from '../core/patient.model';
 import { HealthReport } from '../core/health-report.model';
 import { HealthReportsService } from '../health-reports.service';
@@ -9,10 +9,12 @@ import { HealthReportsService } from '../health-reports.service';
 	styleUrls: ['./patient-details.component.css']
 })
 
-export class PatientDetailsComponent implements OnInit , AfterViewInit{
+export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 	@Input() patient: Patient;
 
 	public reports : HealthReport[] = null;
+
+	private needPull: boolean = true;
 
 	public isCollapsed = true;
 
@@ -22,8 +24,9 @@ export class PatientDetailsComponent implements OnInit , AfterViewInit{
 	ngOnInit(): void {
 	}
 
-	ngAfterViewInit(): void {
-		if ( this.reports == null ) {
+	ngAfterContentChecked(): void {
+		if ( this.needPull == true ) {
+			this.needPull = false;
 			console.log('Fetching reports for ' + this.patient.Name);
 			this.reportService.getForPatient(this.patient.PatientID).subscribe(item => {
 				this.reports = item;

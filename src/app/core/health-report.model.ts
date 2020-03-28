@@ -18,7 +18,7 @@ export class HealthReport {
 export class HealthReportAdapter implements Adapter<HealthReport> {
 
 	adapt(item: any): HealthReport {
-		return new HealthReport(item.date,
+		return new HealthReport(new Date(item.date),
 								item.hearthBeat,
 								item.oxygenation,
 								item.breathingRate);

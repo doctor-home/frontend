@@ -29,12 +29,6 @@ export class HealthReportsService {
 				breathingRate: 13,
 			},
 			{
-				date: '2020-03-27T14:21:45Z',
-				hearthBeat: 67,
-				oxygenation: 96,
-				breathingRate: 12,
-			},
-			{
 				date: '2020-03-28T08:12:13Z',
 				hearthBeat: 79,
 				oxygenation: 95,

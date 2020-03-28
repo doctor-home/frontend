@@ -21,13 +21,15 @@
 			<ng-container *ngFor="let patient of filteredPatients$ | async">
 				<tr>
 					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Name}}</td>
-					<td>{{patient.Treated ? "Yes" : "No" }}</td>
-					<td>{{patient.MLTriage }}</td>
-					<td>{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
-					<td>{{patient.LastReport ? patient.LastReport.HearthBeat + " BPM" : "n.a" }}</td>
-					<td>{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Treated ? "Yes" : "No" }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.MLTriage }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.HearthBeat + " BPM" : "n.a" }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
 				</tr>
-				<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.PatientID]" ></dah-patient-details>
+				<td colspan="6" style="padding:0px">
+					<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.PatientID]" ></dah-patient-details>
+				</td>
 			</ng-container>
 		</tbody>
 	</table>
