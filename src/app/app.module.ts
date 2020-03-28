@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { PatientsComponent, NgbdSortableHeader } from './patients/patients.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
+import { PatientDetailsComponent } from './patient-details/patient-details.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 		HomeComponent,
 		PatientsComponent,
 		NgbdSortableHeader,
-		OrganizationsComponent
+		OrganizationsComponent,
+		PatientDetailsComponent
 	],
 	imports: [
 		RouterModule.forRoot(ROUTES),

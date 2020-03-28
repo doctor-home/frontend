@@ -18,14 +18,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let patient of filteredPatients$ | async">
-				<td>{{patient.Name}}</td>
-				<td>{{patient.Treated ? "Yes" : "No" }}</td>
-				<td>{{patient.MLTriage }}</td>
-				<td>{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
-				<td>{{patient.LastReport ? patient.LastReport.HearthBeat + " BPM" : "n.a" }}</td>
-				<td>{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
-			</tr>
+			<ng-container *ngFor="let patient of filteredPatients$ | async">
+				<tr>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Name}}</td>
+					<td>{{patient.Treated ? "Yes" : "No" }}</td>
+					<td>{{patient.MLTriage }}</td>
+					<td>{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
+					<td>{{patient.LastReport ? patient.LastReport.HearthBeat + " BPM" : "n.a" }}</td>
+					<td>{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
+				</tr>
+				<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.PatientID]" ></dah-patient-details>
+			</ng-container>
 		</tbody>
 	</table>
 </div>

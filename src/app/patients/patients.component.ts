@@ -46,7 +46,7 @@ export class NgbdSortableHeader {
 export class PatientsComponent implements OnInit {
 	public patients: Patient[];
 	public sortedPatients : Patient[];
-
+	public isCollapsed: {[key: string] :boolean} = {};
 	filteredPatients$ : Observable<Patient[]>;
 
 	filter = new FormControl('');
@@ -61,6 +61,9 @@ export class PatientsComponent implements OnInit {
 		this.patients = [];
 		this.patientsService.list().subscribe( (list) => {
 			this.patients = list;
+			for ( let p of list ) {
+				this.isCollapsed[p.PatientID] = true;
+			}
 			this.sortedPatients = this.patients;
 			this.filteredPatients$ = this.filter.valueChanges.pipe(
 				startWith(''),
