@@ -44,8 +44,8 @@ export class HealthChartComponent implements OnInit {
 	public scatterChartData: ChartDataSets[] = [
 		{
 			label: 'Pulse',
-			borderColor: '#1f77b4',
-			backgroundColor: '#1f77b477',
+			borderColor: '#ff7f0e',
+			backgroundColor: '#ff7f0e77',
 			fill: true,
 			showLine: true,
 			//			lineTension: 0,
@@ -59,8 +59,8 @@ export class HealthChartComponent implements OnInit {
 		},
 		{
 			label: 'Oxygenation',
-			borderColor: '#ff7f0e',
-			backgroundColor: '#ff7f0e77',
+			borderColor: '#1f77b4',
+			backgroundColor: '#1f77b477',
 			fill: true,
 			showLine: true,
 			//lineTension: 0,
