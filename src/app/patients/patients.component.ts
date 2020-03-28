@@ -3,9 +3,9 @@ import { DecimalPipe } from '@angular/common';
 import { Patient } from '../core/patient.model';
 import { PatientsService } from '../core/patients.service';
 import { FormControl } from '@angular/forms';
-
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 
 export type SortColumn = keyof Patient | 'LastReportDate'| 'LastReportHearthRate' | 'LastReportOxygenation' | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -25,6 +25,7 @@ export interface SortEvent {
 		'(click)': 'rotate()'
 	}
 })
+
 export class NgbdSortableHeader {
 	@Input() sortable: SortColumn = '';
 	@Input() direction: SortDirection = '';
@@ -54,7 +55,8 @@ export class PatientsComponent implements OnInit {
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
 	constructor(private patientsService: PatientsService,
-				private pipe: DecimalPipe) { }
+				private pipe: DecimalPipe) {
+	}
 
 	ngOnInit(): void {
 
@@ -120,5 +122,6 @@ export class PatientsComponent implements OnInit {
 			this.filter.setValue(this.filter.value);
 		}
 	}
+
 
 }

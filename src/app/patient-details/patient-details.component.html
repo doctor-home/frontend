@@ -2,6 +2,6 @@
 	<h2>Details for {{ patient.Name }}</h2>
 	<p>Days under inspection: {{patient.DaysUnderInspection}} </p>
 	<p> Phone: {{ patient.Phone }} </p>
-
+	<button type="button" class="btn btn-outline-primary" routerLink="/patients/{{patient.PatientID}}" >Edit</button>
 	<dah-health-chart [reports]="reports"></dah-health-chart>
 </div>

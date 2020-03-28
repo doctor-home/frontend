@@ -14,6 +14,7 @@ import { PatientsComponent, NgbdSortableHeader } from './patients/patients.compo
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { HealthChartComponent } from './health-chart/health-chart.component';
+import { PatientEditorComponent } from './patient-editor/patient-editor.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { HealthChartComponent } from './health-chart/health-chart.component';
 		NgbdSortableHeader,
 		OrganizationsComponent,
 		PatientDetailsComponent,
-		HealthChartComponent
+		HealthChartComponent,
+		PatientEditorComponent
 	],
 	imports: [
 		RouterModule.forRoot(ROUTES),

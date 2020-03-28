@@ -2,8 +2,16 @@
 	<h1> Patients for |name| </h1>
 
 
-	<div class="form-group form-inline">
-		Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Table navigation">
+		<div class="btn-group" role="group" aria-label="Edition">
+			<button type="button" class="btn btn-outline-primary" href="" routerLink="/patients/new">Add a Patient</button>
+		</div>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<div class="input-group-text" id="btnGroupAddon2">Search</div>
+			</div>
+			<input type="text" class="form-control" aria-label="Full Text Search" aria-describedby="btnGroupAddon2" [formControl]="filter"/>
+		</div>
 	</div>
 
 	<table class="table table-striped">

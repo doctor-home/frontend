@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="py-5 text-center">
+		<img class="d-block mx-auto mb-4" src="" alt="" width="72" height="72">
+		<h2>{{patient.Name.length == 0 ? 'Register New Patient' : patient.Name}}  </h2>
+		<p class="lead" *ngIf="patient.PatientID.length != 0">Treated at Centre Hospitalier Universitaire de Lausanne</p>
+	</div>
+
+	<div class="col-md-12">
+		<form class="needs-validation" (ngSubmit)="register()" [formGroup]="patientForm">
+			<div class="mb-3">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" [class.is-invalid]="nameCtrl.dirty && nameCtrl.invalid" id="name" formControlName="name" required>
+				<div class="invalid-feedback" *ngIf="nameCtrl.dirty && nameCtrl.hasError('required')" >
+					Name is missing
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label for="phone">Phone number</label>
+				<input type="text" class="form-control" [class.is-invalid]="phoneCtrl.dirty && phoneCtrl.invalid" id="phone" formControlName="phone">
+				<div class="invalid-feedback" *ngIf="phoneCtrl.dirty && phoneCtrl.hasError('required')" >
+					Phone number is missing
+				</div>
+				<div class="invalid-feedback" *ngIf="phoneCtrl.dirty && phoneCtrl.hasError('invalidCountryPhone')" >
+					Phone number is invalid
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label for="name">Language</label>
+				<select type="text" class="form-control" [class.is-invalid]="languageCtrl.dirty && languageCtrl.invalid" id="language" formControlName="language">
+					<option value="en">English</option>
+					<option value="fr">Français</option>
+					<option value="de">Deutsch</option>
+					<option value="it">Italiano</option>
+				</select>
+				<div class="invalid-feedback" *ngIf="languageCtrl.dirty && languageCtrl.hasError('required')" >
+					Language is required
+				</div>
+				<div class="invalid-feedback" *ngIf="languageCtrl.dirty && languageCtrl.hasError('pattern')" >
+					Language is not supported
+				</div>
+			</div>
+
+			<button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="patientForm.invalid">{{patient.PatientID.length == 0 ? 'Register new patient' : 'Save' }}</button>
+		</form>
+	</div>
+</div>

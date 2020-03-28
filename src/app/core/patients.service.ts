@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 export class PatientsService {
 
-	private stubData = new Observable(subscribers => {
+	private stubListData = new Observable(subscribers => {
 		subscribers.next([
 			{
 				name: 'John Doe',
@@ -55,11 +55,29 @@ export class PatientsService {
 		]);
 	});
 
+	private stubData = new Observable( subscribers => {
+		subscribers.next({
+			name: 'John Doe',
+			patientID: 'foo',
+			phone: '+41 79 123 45 67',
+			MLTriage: 'good',
+			language: 'en',
+			treated: false,
+			lastReport: {
+				date: '2020-03-28T13:42:34Z',
+				hearthBeat: 86,
+				oxygenation: 97,
+				breathingRate: 12,
+			},
+			daysUnderInspection: 6,
+		});
+	});
+
 	constructor(private patientAdapter: PatientAdapter) {
 	}
 
 	list() : Observable<Patient[]> {
-		return  this.stubData.pipe(
+		return  this.stubListData.pipe(
 			map(item => {
 				let items = item as any[];
 				let res: Patient[] = [];
@@ -67,6 +85,15 @@ export class PatientsService {
 					res.push(this.patientAdapter.adapt(i));
 				}
 				return res;
+			}));
+	}
+
+	getPatient(patientID: string): Observable<Patient> {
+		console.log('coucou ' + patientID);
+		return this.stubData.pipe(
+			map( item => {
+				item['patientID'] = patientID;
+				return this.patientAdapter.adapt(item);
 			}));
 	}
 }

@@ -23,6 +23,7 @@
 		"@ng-bootstrap/ng-bootstrap": "^6.0.2",
 		"chart.js": "^2.9.3",
 		"feather-icons": "^4.26.0",
+		"google-libphonenumber": "^3.2.8",
 		"ng2-charts": "^2.3.0",
 		"rxjs": "~6.5.4",
 		"tslib": "^1.10.0",
