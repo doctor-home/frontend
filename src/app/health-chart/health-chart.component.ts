@@ -80,17 +80,23 @@ export class HealthChartComponent implements OnInit {
 
 	@Input()
 	set reports(value: HealthReport[]) {
-		this.scatterChartData[0].data = [];
-		this.scatterChartData[1].data = [];
 		if (value == null || value.length == 0 ) {
+			this.scatterChartData[0].data = [];
+			this.scatterChartData[1].data = [];
 			return;
 		}
 		let start: Date = value[0].Date
+		let pulseData = [];
+		let oxygenationData = [];
+
 		for ( let r of value ) {
 			let curTime = (r.Date.getTime() - start.getTime()) / 36e5;
-			this.scatterChartData[0].data.push({x:curTime, y: r.HearthBeat});
-			this.scatterChartData[1].data.push({x:curTime, y: r.Oxygenation});
+			pulseData.push({x:curTime, y: r.HearthBeat});
+			oxygenationData.push({x:curTime, y: r.Oxygenation});
 		}
+		this.scatterChartData[0].data = pulseData;
+		this.scatterChartData[1].data = oxygenationData;
+
 	}
 
 	constructor() { }
