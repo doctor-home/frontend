@@ -1,6 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewChildren, QueryList, PipeTransform } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { Patient } from '../core/patient.model';
 import { PatientsService } from '../core/patients.service';
+import { FormControl } from '@angular/forms';
+
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 export type SortColumn = keyof Patient | 'LastReportDate'| 'LastReportHearthRate' | 'LastReportOxygenation' | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -34,16 +39,22 @@ export class NgbdSortableHeader {
 @Component({
 	selector: 'dah-patients',
 	templateUrl: './patients.component.html',
-	styleUrls: ['./patients.component.css']
+	styleUrls: ['./patients.component.css'],
+	providers: [ DecimalPipe ]
 })
 
 export class PatientsComponent implements OnInit {
 	public patients: Patient[];
 	public sortedPatients : Patient[];
 
+	filteredPatients$ : Observable<Patient[]>;
+
+	filter = new FormControl('');
+
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-	constructor(private patientsService: PatientsService) { }
+	constructor(private patientsService: PatientsService,
+				private pipe: DecimalPipe) { }
 
 	ngOnInit(): void {
 
@@ -51,8 +62,20 @@ export class PatientsComponent implements OnInit {
 		this.patientsService.list().subscribe( (list) => {
 			this.patients = list;
 			this.sortedPatients = this.patients;
+			this.filteredPatients$ = this.filter.valueChanges.pipe(
+				startWith(''),
+				map(text => this.search(text, this.pipe))
+			);
 		});
 
+
+	}
+
+	search(text: string, pipe: PipeTransform): Patient[] {
+		return this.sortedPatients.filter(patient => {
+			const term = text.toLowerCase();
+			return patient.Name.toLowerCase().includes(term) || patient.MLTriage.toLowerCase().includes(term);
+		});
 	}
 
 	onSort({column, direction}: SortEvent) {
@@ -91,6 +114,7 @@ export class PatientsComponent implements OnInit {
 				}
 				return direction === 'asc' ? res : -res;
 			});
+			this.filter.setValue(this.filter.value);
 		}
 	}
 

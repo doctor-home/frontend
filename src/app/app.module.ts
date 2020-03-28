@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
@@ -25,6 +26,8 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 		RouterModule.forRoot(ROUTES),
 		NgbModule,
 		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]
