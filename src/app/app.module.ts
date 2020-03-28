@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -22,7 +23,7 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 	imports: [
 		RouterModule.forRoot(ROUTES),
 		NgbModule,
-		BrowserModule
+		BrowserModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]
