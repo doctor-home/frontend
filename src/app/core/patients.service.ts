@@ -19,7 +19,30 @@ export class PatientsService {
 				MLTriage: 'good',
 				language: 'en',
 				treated: false,
+				lastReport: {
+					date: '2020-03-28T13:42:34Z',
+					hearthBeat: 86,
+					oxygenation: 97,
+					breathingRate: 12,
+					dayUnderInspection: 6,
+				},
 			},
+			{
+				name: 'Jean-Jacques Martin',
+				patientID: 'jj',
+				phone: '+33 79 123 45 67',
+				MLTriage: 'emergency',
+				language: 'fr',
+				treated: true,
+				lastReport: {
+					date: '2020-03-28T13:42:34Z',
+					hearthBeat: 96,
+					oxygenation: 90,
+					breathingRate: 44,
+					dayUnderInspection: 2,
+				},
+			},
+
 			{
 				name: 'Anna Smith',
 				patientID: 'anna2',
