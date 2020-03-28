@@ -1,16 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
 	<a class="navbar-brand" href="" routerLink="/">Doctor@Home</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+
+	<button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
-	<div class="collapse navbar-collapse" id="navbarsExample09">
+	<div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarsExample09">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-				<a class="nav-link" href="" routerLink="/patients" >Patients</a>
+				<a class="nav-link" href="" routerLink="/patients" routerLinkActive="active">Patients</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="" routerLink="/organizations">Organization</a>
+				<a class="nav-link" href="" routerLink="/organizations" routerLinkActive="active">Organization</a>
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-md-0">
