@@ -6,8 +6,7 @@ export class HealthReport {
 	constructor(public Date: Date,
 				public HearthBeat: number,
 				public Oxygenation: number,
-				public BreathingRate: number,
-				public DaysUnderInspection: number) {
+				public BreathingRate: number) {
 	}
 }
 
@@ -22,7 +21,6 @@ export class HealthReportAdapter implements Adapter<HealthReport> {
 		return new HealthReport(item.date,
 								item.hearthBeat,
 								item.oxygenation,
-								item.breathingRate,
-								item.dayInderInspection);
+								item.breathingRate);
 	}
 }

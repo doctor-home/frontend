@@ -24,8 +24,8 @@ export class PatientsService {
 					hearthBeat: 86,
 					oxygenation: 97,
 					breathingRate: 12,
-					dayUnderInspection: 6,
 				},
+				daysUnderInspection: 6,
 			},
 			{
 				name: 'Jean-Jacques Martin',
@@ -39,8 +39,8 @@ export class PatientsService {
 					hearthBeat: 96,
 					oxygenation: 90,
 					breathingRate: 44,
-					dayUnderInspection: 2,
 				},
+				daysUnderInspection: 2,
 			},
 
 			{
@@ -50,6 +50,7 @@ export class PatientsService {
 				MLTriage: 'emergency',
 				language: 'en',
 				treated: false,
+				daysUnderInspection: 1,
 			}
 		]);
 	});

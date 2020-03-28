@@ -11,6 +11,7 @@ export class Patient {
 	readonly MLTriage: string;
 	public Language: string;
 	public Treated: boolean;
+	public DaysUnderInspection: number;
 
 	constructor(id: string,
 				name: string,
@@ -18,7 +19,8 @@ export class Patient {
 				lastReport: HealthReport,
 				MLTriage: string,
 				language: string,
-				treated: boolean) {
+				treated: boolean,
+				daysUnderInspection: number) {
 		this.PatientID = id;
 		this.Name = name;
 		this.Phone = phone;
@@ -26,6 +28,7 @@ export class Patient {
 		this.MLTriage = MLTriage;
 		this.Language = language;
 		this.Treated = treated;
+		this.DaysUnderInspection = daysUnderInspection;
 	}
 
 
@@ -50,7 +53,8 @@ export class PatientAdapter implements Adapter<Patient> {
 						   lastReport,
 						   item.MLTriage,
 						   item.language,
-						   item.treated);
+						   item.treated,
+						   item.daysUnderInspection);
 	}
 
 
