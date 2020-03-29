@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Clinician } from '../core/clinician.model';
+import { AuthService } from '../auth.service';
 
 @Component({
 	selector: 'dah-home',
@@ -7,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeComponent implements OnInit {
-
-	constructor() { }
+	clinician: Clinician;
+	constructor(private authService: AuthService) {
+	}
 
 	ngOnInit(): void {
-
+		this.authService.currentClinician.subscribe((clinician) => {
+			this.clinician = clinician;
+		});
 	}
 
 }

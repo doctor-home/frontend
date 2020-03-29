@@ -16,10 +16,15 @@
 		</ul>
 		<ul class="navbar-nav  navbar-right">
 			<li class="nav-item" *ngIf="isLogged == false">
-				<a class="nav-link" href="" routerLink="/login">Sign In</a>
+				<a class="nav-link" href="" routerLink="/login">
+					<span class="oi oi-account-login mr-2" name="Login" aria-hidden="true"></span>
+					Sign In
+				</a>
 			</li>
 			<li class="nav-item" *ngIf="isLogged == true">
-				<a class="nav-link" href="" (click)="logout()">Logout</a>
+				<a class="nav-link" href="" (click)="logout()">
+					<span class="oi oi-account-logout mr-2" name="Logout" aria-hidden="true"></span> Logout
+				</a>
 			</li>
 		</ul>
 	</div>

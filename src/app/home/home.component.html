@@ -3,7 +3,7 @@
 		<h1>Doctor @ Home</h1>
 		<p>Doctor@Home </p>
 		<p>This website is reserved for practionner.</p>
-        <p>
+        <p *ngIf="clinician == null">
 	        <a class="btn btn-primary" href="/" role="button" routerLink="/login">Sign In &raquo;</a>
         </p>
 	</div>
