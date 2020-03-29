@@ -12,7 +12,7 @@ const users: Clinician[] = [new Clinician('johndoe1', 'John Doe',[],'test','test
 const patients: Patient[] = [
 	new Patient('johndoe1',
 				'John Doe',
-				'+41 77 404 77 84',
+				'+41 79 342 12 39',
 				65,
 				'Hamburg',
 				'Diabete Type II',
@@ -27,7 +27,7 @@ const patients: Patient[] = [
 								 2)),
 	new Patient('jeanjacques1',
 				'Jean-Jacques Martin',
-				'+41 79 342 12 39',
+				'+41 77 404 77 84',
 				70,
 				'Avignon',
 				'',

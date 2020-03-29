@@ -1,4 +1,17 @@
 <div class="container mt-3">
+	<div class="col-md-12 mb-3 d-flex" *ngIf="status.length != 0" >
+		<button class="btn btn-block btn-outline-primary disabled">
+			<span class="spinner-grow spinner-grow-sm mr-1 mt-0 pt-0 mb-1"></span>
+			{{status}}
+		</button>
+	</div>
+	<div class="col-md-12 mb-3 d-flex" *ngIf="error.length != 0" >
+		<button class="btn btn-block btn-outline-danger disabled">
+			<span class="oi oi-x mr-1"></span>
+			{{error}}
+		</button>
+	</div>
+
 	<div class="d-flex border-bottom mb-3 pb-2 justify-content-between">
 		<h2 class="h5">Curves</h2>
 		<div class="btn-toolbar" role="toolbar" aria-label="Patient Edition">

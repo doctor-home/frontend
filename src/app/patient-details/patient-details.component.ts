@@ -4,6 +4,8 @@ import { HealthReport } from '../core/health-report.model';
 import { HealthReportsService } from '../health-reports.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable,throwError } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
 	selector: 'dah-patient-details',
@@ -41,14 +43,17 @@ export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 		}
 	}
 
-	call() {
-		console.log('Clicked');
+	async ddelay(ms: number) {
+		await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+	}
 
+	call() {
 		if ( this.patient == null ) {
 			return;
 		}
-		console.log('Calling');
-		this.status = 'Calling patient...';
+		this.status = 'Calling ' + this.patient.Name;
+		this.error = '';
+
 		this.http.post(this.bffPOSTURL,{
 			'from': '+1 404 666 8654',
 			'to': this.patient.Phone,
@@ -56,14 +61,13 @@ export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 			'webhook': this.bffECHOURL,
 		}).subscribe(
 			(resp)=> {
-				console.log('Sucesss');
-				console.log(resp);
-				this.status = '';
+				this.ddelay(100000).then(any => {
+					this.status = '';
+				});
 			},
 			(resp) => {
-				console.log('Error');
-				console.log(resp);
-				this.error = 'Could not call patient: ' + resp.body;
+				this.error = 'Could not call ' + this.patient.Name + '!';
+				this.status = '';
 			});
 	}
 }
