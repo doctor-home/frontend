@@ -1,48 +1,89 @@
-<div class="container">
+<div class="container mb-3">
 	<div class="py-5 text-center">
 		<img class="d-block mx-auto mb-4" src="" alt="" width="72" height="72">
 		<h2>{{patient.Name.length == 0 ? 'Register New Patient' : patient.Name}}  </h2>
-		<p class="lead" *ngIf="patient.ID.length != 0">Treated at Centre Hospitalier Universitaire de Lausanne</p>
+		<p class="lead" *ngIf="patient.ID.length != 0">Observed by {{clinician?.Name}}</p>
 	</div>
+	<form  (ngSubmit)="register()" [formGroup]="patientForm">
+		<div class="row">
+			<div class="col-lg-6 mb-3">
+				<h4 class="mb-4"> Contact Information </h4>
+				<!-- Name -->
+				<div class="mb-3">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" [ngClass]="{ 'is-invalid': nameCtrl.dirty && nameCtrl.invalid}" id="name" formControlName="name">
+					<div *ngIf="nameCtrl.dirty && nameCtrl.invalid">
+						<div class="invalid-feedback" *ngIf="nameCtrl.hasError('required')" >
+							Name is missing
+						</div>
+					</div>
+				</div>
+				<!-- Phone -->
+				<div class="mb-3">
+					<label for="phone">Phone number</label>
+					<input type="text" class="form-control" [ngClass]="{ 'is-invalid': phoneCtrl.dirty && phoneCtrl.invalid}" id="phone" formControlName="phone">
+					<div *ngIf="phoneCtrl.dirty && phoneCtrl.invalid">
+						<div class="invalid-feedback" *ngIf="phoneCtrl.hasError('required')" >
+							Phone number is missing
+						</div>
+						<div class="invalid-feedback" *ngIf="phoneCtrl.hasError('invalidCountryPhone')" >
+							Phone number is invalid
+						</div>
+					</div>
+				</div>
 
-	<div class="col-md-12">
-		<form class="needs-validation" (ngSubmit)="register()" [formGroup]="patientForm">
-			<div class="mb-3">
-				<label for="name">Name</label>
-				<input type="text" class="form-control" [class.is-invalid]="nameCtrl.dirty && nameCtrl.invalid" id="name" formControlName="name" required>
-				<div class="invalid-feedback" *ngIf="nameCtrl.dirty && nameCtrl.hasError('required')" >
-					Name is missing
+				<div class="mb-3">
+					<label for="name">Language</label>
+					<select class="form-control" [ngClass]="{ 'is-invalid': languageCtrl.dirty && languageCtrl.invalid}" id="language" formControlName="language">
+						<option value="en">English</option>
+						<option value="fr">Français</option>
+						<option value="de">Deutsch</option>
+						<option value="it">Italiano</option>
+					</select>
+					<div *ngIf="languageCtrl.dirty && languageCtrl.invalid">
+						<div class="invalid-feedback" *ngIf="languageCtrl.hasError('required')" >
+							Language is required
+						</div>
+						<div class="invalid-feedback" *ngIf="languageCtrl.hasError('pattern')" >
+							Language is not supported
+						</div>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="city">City</label>
+					<input type="text" class="form-control" [ngClass]="{ 'ís-invalid': cityCtrl.dirty && cityCtrl.invalid }" id="city" formControlName="city">
+					<div *ngIf="cityCtrl.dirty && cityCtrl.invalid">
+						<div class="invalid-feedback" *ngIf="cityCtrl.hasError('required')">
+							Patient city is required
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="mb-3">
-				<label for="phone">Phone number</label>
-				<input type="text" class="form-control" [class.is-invalid]="phoneCtrl.dirty && phoneCtrl.invalid" id="phone" formControlName="phone">
-				<div class="invalid-feedback" *ngIf="phoneCtrl.dirty && phoneCtrl.hasError('required')" >
-					Phone number is missing
+			<div class="col-lg-6 mb-3">
+				<h4 class="mb-4"> Medical Information</h4>
+				<div class="mb-3">
+					<label for="age">Age</label>
+					<input type="text" class="form-control" [ngClass]="{ 'ís-invalid': ageCtrl.dirty && ageCtrl.invalid }" id="age" formControlName="age">
+					<div *ngIf="ageCtrl.dirty && ageCtrl.invalid">
+						<div class="invalid-feedback" *ngIf="ageCtrl.hasError('required')">
+							Patient age is required
+						</div>
+						<div class="invalid-feedback" *ngIf="ageCtrl.hasError('min')">
+							Patient age cannot be negative.
+						</div>
+						<div class="invalid-feedback" *ngIf="ageCtrl.hasError('max')">
+							Patient age is very likely too high
+						</div>
+					</div>
 				</div>
-				<div class="invalid-feedback" *ngIf="phoneCtrl.dirty && phoneCtrl.hasError('invalidCountryPhone')" >
-					Phone number is invalid
-				</div>
-			</div>
-
-			<div class="mb-3">
-				<label for="name">Language</label>
-				<select type="text" class="form-control" [class.is-invalid]="languageCtrl.dirty && languageCtrl.invalid" id="language" formControlName="language">
-					<option value="en">English</option>
-					<option value="fr">Français</option>
-					<option value="de">Deutsch</option>
-					<option value="it">Italiano</option>
-				</select>
-				<div class="invalid-feedback" *ngIf="languageCtrl.dirty && languageCtrl.hasError('required')" >
-					Language is required
-				</div>
-				<div class="invalid-feedback" *ngIf="languageCtrl.dirty && languageCtrl.hasError('pattern')" >
-					Language is not supported
+				<div class="mb-3">
+					<label for="age">Preconditions</label>
+					<textarea rows="4" class="form-control" [ngClass]="{ 'ís-invalid': preconditionsCtrl.dirty && preconditionsCtrl.invalid }" id="preconditions" formControlName="preconditions"></textarea>
+					<div *ngIf="preconditionsCtrl.dirty && preconditionsCtrl.invalid">
+					</div>
 				</div>
 			</div>
-
-			<button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="patientForm.invalid">{{patient.ID.length == 0 ? 'Register new patient' : 'Save' }}</button>
-		</form>
-	</div>
+		</div>
+		<button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="patientForm.invalid">{{patient.ID.length == 0 ? 'Register new patient' : 'Save' }}</button>
+	</form>
 </div>
