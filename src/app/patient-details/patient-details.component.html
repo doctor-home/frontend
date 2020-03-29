@@ -1,7 +1,16 @@
-<div >
-	<h2>Details for {{ patient.Name }}</h2>
+<div class="container mt-3">
+	<div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Patient Edition">
+		<button type="button" class="btn btn-outline-primary mr-2" routerLink="/patients/{{patient.PatientID}}" >
+			<span class="oi oi-document" title="Edit" aria-hidden="true"></span>
+			Edit Patient Data
+		</button>
+		<button type="button" class="btn btn-primary mr-2" >
+			<span class="oi oi-phone" title="Phone" aria-hidden="true"></span>
+			Call patient now
+		</button>
+
+	</div>
 	<p>Days under inspection: {{patient.DaysUnderInspection}} </p>
 	<p> Phone: {{ patient.Phone }} </p>
-	<button type="button" class="btn btn-outline-primary" routerLink="/patients/{{patient.PatientID}}" >Edit</button>
 	<dah-health-chart [reports]="reports"></dah-health-chart>
 </div>

@@ -25,6 +25,7 @@
 		"feather-icons": "^4.26.0",
 		"google-libphonenumber": "^3.2.8",
 		"ng2-charts": "^2.3.0",
+		"open-iconic": "^1.1.1",
 		"rxjs": "~6.5.4",
 		"tslib": "^1.10.0",
 		"zone.js": "~0.10.2"

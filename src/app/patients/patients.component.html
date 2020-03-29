@@ -1,16 +1,18 @@
-<div class="container">
-	<h1> Patients for |name| </h1>
+<div class="container mb-3">
+	<h1 class="mb-5" > Patients for {{clinician?.Name}} </h1>
 
-
-	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Table navigation">
-		<div class="btn-group" role="group" aria-label="Edition">
-			<button type="button" class="btn btn-outline-primary" href="" routerLink="/patients/new">Add a Patient</button>
-		</div>
+	<div class="btn-toolbar justify-content-between mb-3" role="toolbar" aria-label="Table navigation">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<div class="input-group-text" id="btnGroupAddon2">Search</div>
 			</div>
 			<input type="text" class="form-control" aria-label="Full Text Search" aria-describedby="btnGroupAddon2" [formControl]="filter"/>
+		</div>
+		<div class="btn-group" role="group" aria-label="Edition">
+			<button type="button" class="btn btn-outline-primary" href="" routerLink="/patients/new">
+				<span class="oi oi-plus" title="Add" aria-hidden="true"></span>
+				Add a Patient
+			</button>
 		</div>
 	</div>
 
@@ -21,8 +23,8 @@
 				<th scope="col" sortable="Treated" (sort)="onSort($event)">Treated</th>
 				<th scope="col" sortable="MLTriage" (sort)="onSort($event)">ML Triage</th>
 				<th scope="col" sortable="LastReportDate" (sort)="onSort($event)">Last Report Date</th>
-				<th scope="col" sortable="LastReportHeartRate" (sort)="onSort($event)">Last Report Heart Rate</th>
-				<th scope="col" sortable="LastReportOxygenation" (sort)="onSort($event)">Last Report Oxygenation</th>
+				<th scope="col" sortable="LastReportHeartRate" (sort)="onSort($event)">Last Report Heart Rate (BPM)</th>
+				<th scope="col" sortable="LastReportOxygenation" (sort)="onSort($event)">Last Report Oxygenation (%)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,9 +33,9 @@
 					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Name}}</td>
 					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Treated ? "Yes" : "No" }}</td>
 					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.MLTriage }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.Date : "n.a" }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.HearthBeat + " BPM" : "n.a" }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.LastReport ? patient.LastReport.Oxygenation + " %" : "n.a" }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ (patient.LastReport?.Date | date:'short' ) || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ patient.LastReport?.HearthBeat || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ patient.LastReport?.Oxygenation || 'N.A' }}</td>
 				</tr>
 				<td colspan="6" style="padding:0px">
 					<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.PatientID]" ></dah-patient-details>

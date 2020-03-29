@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewChildren, QueryList, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Patient } from '../core/patient.model';
+import { Clinician } from '../core/clinician.model';
 import { PatientsService } from '../core/patients.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
+import { AuthService } from '../auth.service';
 
 export type SortColumn = keyof Patient | 'LastReportDate'| 'LastReportHearthRate' | 'LastReportOxygenation' | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -45,6 +46,8 @@ export class NgbdSortableHeader {
 })
 
 export class PatientsComponent implements OnInit {
+	public clinician: Clinician;
+
 	public patients: Patient[];
 	public sortedPatients : Patient[];
 	public isCollapsed: {[key: string] :boolean} = {};
@@ -55,10 +58,16 @@ export class PatientsComponent implements OnInit {
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
 	constructor(private patientsService: PatientsService,
+				private authService: AuthService,
 				private pipe: DecimalPipe) {
 	}
 
 	ngOnInit(): void {
+
+		this.authService.currentClinician.subscribe(
+			(clinician) => {
+				this.clinician = clinician;
+			});
 
 		this.patients = [];
 		this.patientsService.list().subscribe( (list) => {
