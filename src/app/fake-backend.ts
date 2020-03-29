@@ -12,7 +12,7 @@ const users: Clinician[] = [new Clinician('johndoe1', 'John Doe',[],'test','test
 const patients: Patient[] = [
 	new Patient('johndoe1',
 				'John Doe',
-				'+41 79 123 45 67',
+				'+41 77 404 77 84',
 				65,
 				'Hamburg',
 				'Diabete Type II',
@@ -27,7 +27,7 @@ const patients: Patient[] = [
 								 2)),
 	new Patient('jeanjacques1',
 				'Jean-Jacques Martin',
-				'+33 79 123 45 67',
+				'+41 79 342 12 39',
 				70,
 				'Avignon',
 				'',
@@ -150,7 +150,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 					return getPatients(true);
 				case url.indexOf('/api/dah/v0/patients') != -1 && method == 'GET':
 					if ( url.endsWith('/health-reports') ) {
-						console.log(reports);
 						return ok(reports);
 					} else {
 						const splitted = url.split('/');

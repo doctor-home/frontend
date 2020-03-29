@@ -4,7 +4,8 @@
 
 export const environment = {
 	production: false,
-	apiEndpoint: 'http://localhost:4201/'
+	apiEndpoint: 'http://localhost:4201/',
+	bffEndpoint: 'http://doctor-at-home-bff.eastus.azurecontainer.io:8080',
 };
 
 /*
