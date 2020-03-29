@@ -8,18 +8,29 @@ export class HealthReport {
 				public Oxygenation: number,
 				public BreathingRate: number,
 				public Temperature: number,
-				public Triage: string) {
+				public Triage: number) {
 	}
-}
 
+	triageDisplayLevel(): string {
+		switch(this.Triage) {
+			case 1:
+				return '';
+			case 2:
+				return '';
+			case 3:
+				return 'table-warning';
+			case 4:
+				return 'table-warning';
+			case 5:
+				return 'table-danger';
+			default:
+				return '';
+		}
 
-@Injectable({
-    providedIn: 'root'
-})
+	}
 
-export class HealthReportAdapter implements Adapter<HealthReport> {
-	static triageConversion(value: number): string {
-		switch(value) {
+	triageDescription(): string {
+		switch(this.Triage) {
 			case 1:
 				return 'non urgent';
 			case 2:
@@ -35,12 +46,21 @@ export class HealthReportAdapter implements Adapter<HealthReport> {
 		}
 	}
 
+}
+
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class HealthReportAdapter implements Adapter<HealthReport> {
+
 	adapt(item: any): HealthReport {
 		return new HealthReport(new Date(item.timestamp),
 								item.hearthBeat,
 								item.oxygenation,
 								item.breathingRate,
 								item.temperature,
-								HealthReportAdapter.triageConversion(item.ML_Triage));
+								item.ML_Triage);
 	}
 }

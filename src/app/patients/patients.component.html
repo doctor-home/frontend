@@ -36,11 +36,11 @@
 		</thead>
 		<tbody>
 			<ng-container *ngFor="let patient of filteredPatients$ | async">
-				<tr>
+				<tr [ngClass]="patient.LastReport?.triageDisplayLevel()">
 					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{patient.Name}}</td>
 					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{patient.UnderObservation ? "Yes" : "No" }}</td>
 					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ (patient.LastReport?.Date | date:'short' ) || 'N.A.' }}</td>
-					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.Triage || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.triageDescription() || 'N.A.' }}</td>
 					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.HearthBeat || 'N.A.' }}</td>
 					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.Oxygenation || 'N.A' }}</td>
 				</tr>

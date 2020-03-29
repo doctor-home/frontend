@@ -24,7 +24,7 @@ const patients: Patient[] = [
 								 97,
 								 12,
 								 37.8,
-								 'good')),
+								 2)),
 	new Patient('jeanjacques1',
 				'Jean-Jacques Martin',
 				'+33 79 123 45 67',
@@ -39,7 +39,7 @@ const patients: Patient[] = [
 								 90,
 								 44,
 								 38.3,
-								 'emergency')),
+								 5)),
 	new Patient('annasmith2',
 				'Anna Smith',
 				'+44 79 321 45 46',
@@ -191,7 +191,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 				oxygenation: r.Oxygenation,
 				temperature: r.Temperature,
 				breathingRate: r.BreathingRate,
-				ML_Triage: r.Triage == 'good' ? 1 : 5,
+				ML_Triage: r.Triage,
 			};
 		}
 

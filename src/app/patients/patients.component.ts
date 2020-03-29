@@ -120,7 +120,7 @@ export class PatientsComponent implements OnInit {
 	search(text: string, pipe: PipeTransform): Patient[] {
 		return this.sortedPatients.filter(patient => {
 			const term = text.toLowerCase();
-			return patient?.Name.toLowerCase().includes(term) || patient.LastReport?.Triage?.toLowerCase().includes(term);
+			return patient?.Name.toLowerCase().includes(term) || patient.LastReport?.triageDescription().toLowerCase().includes(term);
 		});
 	}
 
