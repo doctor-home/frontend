@@ -13,7 +13,6 @@ export class HealthReportsService {
 
 	private baseURL = environment.apiEndpoint + '/api/dah/v0';
 
-
 	constructor(private reportAdapter: HealthReportAdapter,
 				private http: HttpClient) {
 	}

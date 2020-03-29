@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 
-export type SortColumn = keyof Patient | 'LastReportDate'| 'LastReportHearthRate' | 'LastReportOxygenation' | '';
+export type SortColumn = keyof Patient | 'LastReportDate'| 'LastReportTriage' | 'LastReportHearthRate' | 'LastReportOxygenation' | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -138,9 +138,7 @@ export class PatientsComponent implements OnInit {
 		} else {
 			this.sortedPatients = [...this.patients].sort((a, b) => {
 				let res = 0;
-				if ( column == "LastReportDate"
-					|| column == "LastReportOxygenation"
-					|| column == "LastReportHearthRate" ) {
+				if ( column.indexOf('LastReport') == 0 ) {
 					if ( a.LastReport == null ) {
 						if ( b.LastReport == null ) {
 							res = 0;
@@ -151,7 +149,7 @@ export class PatientsComponent implements OnInit {
 						if ( b.LastReport == null ) {
 							res = -1;
 						} else {
-							let reportColumn = `Date`;
+							let reportColumn = column.replace('LastReport','');
 							res = compare(`${a['LastReport'][reportColumn]}`,`$b['LastReport'][reportColumn]`);
 						}
 					}
