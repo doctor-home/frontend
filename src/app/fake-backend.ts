@@ -157,7 +157,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 			return ok(res);
 		}
 
-
 		function getPatient(patientID: string) {
             const p = patients.find(x => x.ID === patientID);
 			if ( !p ) {

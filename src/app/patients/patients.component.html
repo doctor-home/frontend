@@ -8,6 +8,13 @@
 			</div>
 			<input type="text" class="form-control" aria-label="Full Text Search" aria-describedby="btnGroupAddon2" [formControl]="filter"/>
 		</div>
+
+		<div class="btn-group btn-group-toggle" ngbRadioGroup name="Only Observed" >
+			<label ngbButtonLabel class="btn-outline-primary">
+				<input ngbButton type="checkBox" [(ngModel)]="hideUnobserved" > Hide Unobserved Patient
+			</label>
+		</div>
+
 		<div class="btn-group" role="group" aria-label="Edition">
 			<button type="button" class="btn btn-outline-primary" href="" routerLink="/patients/new">
 				<span class="oi oi-plus" title="Add" aria-hidden="true"></span>

@@ -28,6 +28,19 @@ export class PatientsService {
 			}));
 	}
 
+	listAll(clinicianID: string) : Observable<Patient[]> {
+		return this.http.get(this.baseURL + '/clinician/' + clinicianID + '/patients').pipe(
+			map(item => {
+				let items = item as any[];
+				let res: Patient[] = [];
+				for ( let i of items) {
+					res.push(this.patientAdapter.adapt(i));
+				}
+				return res;
+			}));
+	}
+
+
 	getPatient(patientID: string): Observable<Patient> {
 		return this.http.get(this.baseURL + '/patients/' + patientID).pipe(
 			map( item => {

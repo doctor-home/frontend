@@ -55,11 +55,42 @@ export class PatientsComponent implements OnInit {
 
 	filter = new FormControl('');
 
+	private _hideUnobserved = true;
+	@Input()
+	set hideUnobserved(value: boolean) {
+
+		if ( this._hideUnobserved == value ) {
+			return;
+		}
+		this._hideUnobserved = value;
+		if ( value == true ) {
+			this.patientsService.listUntreated(this.clinician.ID).subscribe( (list) => {
+				this.patientSubscriber(list);
+			});
+		} else {
+			this.patientsService.listAll(this.clinician.ID).subscribe( (list) => {
+				this.patientSubscriber(list);
+			});
+		}
+	}
+
+	get hideUnobserved(): boolean { return this._hideUnobserved; }
+
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
 	constructor(private patientsService: PatientsService,
 				private authService: AuthService,
 				private pipe: DecimalPipe) {
+	}
+
+
+	patientSubscriber(list: Patient[]) {
+		this.patients = list;
+		for ( let p of list ) {
+			this.isCollapsed[p.ID] = true;
+		}
+		this.sortedPatients = this.patients;
+		this.filter.setValue(this.filter.value);
 	}
 
 	ngOnInit(): void {
@@ -81,12 +112,7 @@ export class PatientsComponent implements OnInit {
 					return;
 				}
 				this.patientsService.listUntreated(clinician.ID).subscribe( (list) => {
-					this.patients = list;
-					for ( let p of list ) {
-						this.isCollapsed[p.ID] = true;
-					}
-					this.sortedPatients = this.patients;
-					this.filter.setValue(this.filter.value);
+					this.patientSubscriber(list);
 				});
 			});
 	}
