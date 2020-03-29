@@ -52,8 +52,79 @@ const patients: Patient[] = [
 				null)
 ];
 
-const reports: HealthReport[] = [
-
+const reports = [
+	{
+		timestamp: '2020-03-27T09:32:34Z',
+		hearthBeat: 65,
+		oxygenation: 97,
+		breathingRate: 12,
+		temperature: 38.1,
+		ML_Triage: 1,
+	},
+	{
+		timestamp: '2020-03-27T14:21:45Z',
+		hearthBeat: 67,
+		oxygenation: 96,
+		breathingRate: 12,
+		temperature: 38.3,
+		ML_Triage: 1,
+	},
+	{
+		timestamp: '2020-03-27T18:22:15Z',
+		hearthBeat: 75,
+		oxygenation: 98,
+		breathingRate: 13,
+		temperature: 38.5,
+		ML_Triage: 2,
+	},
+	{
+		timestamp: '2020-03-28T08:12:13Z',
+		hearthBeat: 79,
+		oxygenation: 95,
+		breathingRate: 12,
+		temperature: 38.8,
+		ML_Triage: 3,
+	},
+	{
+		timestamp: '2020-03-28T14:46:13Z',
+		hearthBeat: 79,
+		oxygenation: 94,
+		breathingRate: 18,
+		temperature: 38.2,
+		ML_Triage: 4,
+	},
+	{
+		timestamp: '2020-03-28T19:46:13Z',
+		hearthBeat: 79,
+		oxygenation: 98,
+		breathingRate: 18,
+		temperature: 38.7,
+		ML_Triage: 3,
+	},
+	{
+		timestamp: '2020-03-29T10:05:56Z',
+		hearthBeat: 79,
+		oxygenation: 93,
+		breathingRate: 25,
+		temperature: 39.1,
+		ML_Triage: 5,
+	},
+	{
+		timestamp: '2020-03-29T13:05:56Z',
+		hearthBeat: 86,
+		oxygenation: 92,
+		breathingRate: 29,
+		temperature: 39.2,
+		ML_Triage: 5,
+	},
+	{
+		timestamp: '2020-03-29T18:05:56Z',
+		hearthBeat: 98,
+		oxygenation: 90,
+		breathingRate: 30,
+		temperature: 39.3,
+		ML_Triage: 5,
+	},
 ];
 
 
@@ -79,7 +150,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 					return getPatients(true);
 				case url.indexOf('/api/dah/v0/patients') != -1 && method == 'GET':
 					if ( url.endsWith('/health-reports') ) {
-						return next.handle(request);
+						console.log(reports);
+						return ok(reports);
 					} else {
 						const splitted = url.split('/');
 						return getPatient(splitted[splitted.length-1]);

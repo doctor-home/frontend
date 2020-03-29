@@ -20,9 +20,13 @@ export class HealthReport {
 export class HealthReportAdapter implements Adapter<HealthReport> {
 	static triageConversion(value: number): string {
 		switch(value) {
-			case 0:
-				return 'good';
 			case 1:
+				return 'good';
+			case 2:
+			case 3:
+			case 4:
+				return 'intermediary';
+			case 5:
 				return 'emergency';
 			default:
 				return '<unknown>';

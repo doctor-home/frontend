@@ -1,21 +1,21 @@
 <div class="container mb-3">
 	<h1 class="mb-5" > Patients for {{clinician?.Name}} </h1>
 
-	<div class="btn-toolbar justify-content-between mb-3" role="toolbar" aria-label="Table navigation">
-		<div class="input-group">
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Table navigation">
+		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<div class="input-group-text" id="btnGroupAddon2">Search</div>
 			</div>
 			<input type="text" class="form-control" aria-label="Full Text Search" aria-describedby="btnGroupAddon2" [formControl]="filter"/>
 		</div>
 
-		<div class="btn-group btn-group-toggle" ngbRadioGroup name="Only Observed" >
+		<div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="Only Observed" >
 			<label ngbButtonLabel class="btn-outline-primary">
 				<input ngbButton type="checkBox" [(ngModel)]="hideUnobserved" > Hide Unobserved Patient
 			</label>
 		</div>
 
-		<div class="btn-group" role="group" aria-label="Edition">
+		<div class="btn-group mb-3" role="group" aria-label="Edition">
 			<button type="button" class="btn btn-outline-primary" href="" routerLink="/patients/new">
 				<span class="oi oi-plus" title="Add" aria-hidden="true"></span>
 				Add a Patient
