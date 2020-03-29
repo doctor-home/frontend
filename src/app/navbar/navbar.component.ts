@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
 	selector: 'dah-navbar',
@@ -9,12 +10,20 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
 	isMenuCollapsed: boolean
+	isLogged: boolean
 
-	constructor() {
+	constructor(private authService: AuthService) {
 		this.isMenuCollapsed = true;
 	}
 
 	ngOnInit(): void {
+		this.authService.currentClinician.subscribe((clinician) => {
+			this.isLogged = clinician != null;
+		});
+	}
+
+	logout(): void {
+		this.authService.logout();
 	}
 
 }

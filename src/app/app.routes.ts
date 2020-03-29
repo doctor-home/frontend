@@ -3,12 +3,15 @@ import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { PatientEditorComponent } from './patient-editor/patient-editor.component';
+import { LoginComponent } from './login/login.component';
 
+import { AuthGuard } from './auth.guard';
 
 export const ROUTES: Routes = [
 	{ path: '', component: HomeComponent },
-	{ path: 'patients', component: PatientsComponent },
-	{ path: 'organizations', component: OrganizationsComponent },
-	{ path: 'patients/new', component: PatientEditorComponent },
-	{ path: 'patients/:patientId:', component: PatientEditorComponent }
+	{ path: 'login', component: LoginComponent },
+	{ path: 'patients', component: PatientsComponent, canActivate: [AuthGuard] },
+	{ path: 'organizations', component: OrganizationsComponent, canActivate: [AuthGuard] },
+	{ path: 'patients/new', component: PatientEditorComponent,canActivate: [AuthGuard] },
+	{ path: 'patients/:patientId:', component: PatientEditorComponent, canActivate: [AuthGuard] }
 ];

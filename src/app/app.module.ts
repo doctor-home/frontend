@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
@@ -15,7 +17,11 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { HealthChartComponent } from './health-chart/health-chart.component';
 import { PatientEditorComponent } from './patient-editor/patient-editor.component';
+import { LoginComponent } from './login/login.component';
 
+import { AuthInterceptor }  from './auth.interceptor';
+
+import { fakeBackendProvider } from './fake-backend';
 
 @NgModule({
 	declarations: [
@@ -27,7 +33,8 @@ import { PatientEditorComponent } from './patient-editor/patient-editor.componen
 		OrganizationsComponent,
 		PatientDetailsComponent,
 		HealthChartComponent,
-		PatientEditorComponent
+		PatientEditorComponent,
+		LoginComponent
 	],
 	imports: [
 		RouterModule.forRoot(ROUTES),
@@ -36,8 +43,13 @@ import { PatientEditorComponent } from './patient-editor/patient-editor.componen
 		FormsModule,
 		ReactiveFormsModule,
 		ChartsModule,
+		HttpClientModule,
 	],
-	providers: [],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
+		fakeBackendProvider
+	],
 	bootstrap: [AppComponent]
 })
 
