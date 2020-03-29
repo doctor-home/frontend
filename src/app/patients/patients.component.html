@@ -20,9 +20,9 @@
 		<thead>
 			<tr>
 				<th scope="col" sortable="Name" (sort)="onSort($event)">Name</th>
-				<th scope="col" sortable="Treated" (sort)="onSort($event)">Treated</th>
-				<th scope="col" sortable="MLTriage" (sort)="onSort($event)">ML Triage</th>
+				<th scope="col" sortable="UnderObservation" (sort)="onSort($event)">Under Observation</th>
 				<th scope="col" sortable="LastReportDate" (sort)="onSort($event)">Last Report Date</th>
+				<th scope="col" sortable="LastReportTriage" (sort)="onSort($event)">Last Report Triage</th>
 				<th scope="col" sortable="LastReportHeartRate" (sort)="onSort($event)">Last Report Heart Rate (BPM)</th>
 				<th scope="col" sortable="LastReportOxygenation" (sort)="onSort($event)">Last Report Oxygenation (%)</th>
 			</tr>
@@ -30,15 +30,15 @@
 		<tbody>
 			<ng-container *ngFor="let patient of filteredPatients$ | async">
 				<tr>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Name}}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.Treated ? "Yes" : "No" }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{patient.MLTriage }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ (patient.LastReport?.Date | date:'short' ) || 'N.A.' }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ patient.LastReport?.HearthBeat || 'N.A.' }}</td>
-					<td (click)="isCollapsed[patient.PatientID] = !isCollapsed[patient.PatientID]" >{{ patient.LastReport?.Oxygenation || 'N.A' }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{patient.Name}}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{patient.UnderObservation ? "Yes" : "No" }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ (patient.LastReport?.Date | date:'short' ) || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.Triage || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.HearthBeat || 'N.A.' }}</td>
+					<td (click)="isCollapsed[patient.ID] = !isCollapsed[patient.ID]" >{{ patient.LastReport?.Oxygenation || 'N.A' }}</td>
 				</tr>
 				<td colspan="6" style="padding:0px">
-					<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.PatientID]" ></dah-patient-details>
+					<dah-patient-details [patient]="patient" *ngIf="!isCollapsed[patient.ID]" ></dah-patient-details>
 				</td>
 			</ng-container>
 		</tbody>

@@ -63,32 +63,38 @@ export class PatientsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.patients = [];
+		this.sortedPatients = [];
+		this.filteredPatients$ = this.filter.valueChanges.pipe(
+			startWith(''),
+			map(text => this.search(text, this.pipe))
+		);
 
 		this.authService.currentClinician.subscribe(
 			(clinician) => {
 				this.clinician = clinician;
+				if ( !clinician ) {
+					this.patients = [];
+					this.sortedPatients = [];
+					this.isCollapsed = {};
+					this.filter.setValue(this.filter.value);
+					return;
+				}
+				this.patientsService.listUntreated(clinician.ID).subscribe( (list) => {
+					this.patients = list;
+					for ( let p of list ) {
+						this.isCollapsed[p.ID] = true;
+					}
+					this.sortedPatients = this.patients;
+					this.filter.setValue(this.filter.value);
+				});
 			});
-
-		this.patients = [];
-		this.patientsService.list().subscribe( (list) => {
-			this.patients = list;
-			for ( let p of list ) {
-				this.isCollapsed[p.PatientID] = true;
-			}
-			this.sortedPatients = this.patients;
-			this.filteredPatients$ = this.filter.valueChanges.pipe(
-				startWith(''),
-				map(text => this.search(text, this.pipe))
-			);
-		});
-
-
 	}
 
 	search(text: string, pipe: PipeTransform): Patient[] {
 		return this.sortedPatients.filter(patient => {
 			const term = text.toLowerCase();
-			return patient.Name.toLowerCase().includes(term) || patient.MLTriage.toLowerCase().includes(term);
+			return patient?.Name.toLowerCase().includes(term) || patient.LastReport?.Triage?.toLowerCase().includes(term);
 		});
 	}
 

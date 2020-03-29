@@ -18,7 +18,6 @@ export class PhoneValidator {
 					return undefined;
 				}
 			} catch (e) {
-				console.log(e);
 				return {
 					invalidCountryPhone: true
 				};
@@ -39,7 +38,7 @@ export class PhoneValidator {
 
 export class PatientEditorComponent implements OnInit {
 
-	public patient: Patient = new Patient('','','',null,'','',false,0);
+	public patient: Patient = new Patient('','','',0,'','','',true,0, null);
 
 
 	public nameCtrl : FormControl;
@@ -80,7 +79,7 @@ export class PatientEditorComponent implements OnInit {
 				this.patientsService.getPatient(id).subscribe(patient => {
 					this.patient = patient
 					this.nameCtrl.setValue(patient.Name);
-					this.idCtrl.setValue(patient.PatientID);
+					this.idCtrl.setValue(patient.ID);
 					this.phoneCtrl.setValue(patient.Phone);
 					this.languageCtrl.setValue(patient.Language);
 				});

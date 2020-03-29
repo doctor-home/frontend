@@ -4,36 +4,20 @@ import { Adapter } from './adapter';
 import { HealthReport, HealthReportAdapter } from './health-report.model';
 
 export class Patient {
-	readonly PatientID: string;
-	public Name: string;
-	public Phone: string;
-	readonly LastReport: HealthReport;
-	readonly MLTriage: string;
-	public Language: string;
-	public Treated: boolean;
-	public DaysUnderInspection: number;
 
-	constructor(id: string,
-				name: string,
-				phone: string,
-				lastReport: HealthReport,
-				MLTriage: string,
-				language: string,
-				treated: boolean,
-				daysUnderInspection: number) {
-		this.PatientID = id;
-		this.Name = name;
-		this.Phone = phone;
-		this.LastReport = lastReport;
-		this.MLTriage = MLTriage;
-		this.Language = language;
-		this.Treated = treated;
-		this.DaysUnderInspection = daysUnderInspection;
+	constructor(public ID: string,
+				public Name: string,
+				public Phone: string,
+				public Age: number,
+				public City: string,
+				public Preconditions: string,
+				public Language: string,
+				public UnderObservation: boolean,
+				public DaysUnderInspection: number,
+				public LastReport: HealthReport) {
 	}
 
-
 }
-
 
 @Injectable({
     providedIn: 'root'
@@ -44,17 +28,19 @@ export class PatientAdapter implements Adapter<Patient> {
 
 	adapt(item: any): Patient {
 		let lastReport: HealthReport = null;
-		if ( item.lastReport) {
-			lastReport = this.reportAdapter.adapt(item.lastReport);
+		if ( item.summary && item.summary.lastReport ) {
+			lastReport = this.reportAdapter.adapt(item.summary.lastReport);
 		}
 		return new Patient(item.patientID,
 						   item.name,
 						   item.phone,
-						   lastReport,
-						   item.MLTriage,
+						   item.age,
+						   item.city,
+						   item.preconditions,
 						   item.language,
-						   item.treated,
-						   item.daysUnderInspection);
+						   item.under_observation,
+						   item.daysUnderInspection,
+						   lastReport);
 	}
 
 

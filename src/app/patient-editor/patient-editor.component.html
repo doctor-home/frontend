@@ -2,7 +2,7 @@
 	<div class="py-5 text-center">
 		<img class="d-block mx-auto mb-4" src="" alt="" width="72" height="72">
 		<h2>{{patient.Name.length == 0 ? 'Register New Patient' : patient.Name}}  </h2>
-		<p class="lead" *ngIf="patient.PatientID.length != 0">Treated at Centre Hospitalier Universitaire de Lausanne</p>
+		<p class="lead" *ngIf="patient.ID.length != 0">Treated at Centre Hospitalier Universitaire de Lausanne</p>
 	</div>
 
 	<div class="col-md-12">
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 
-			<button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="patientForm.invalid">{{patient.PatientID.length == 0 ? 'Register new patient' : 'Save' }}</button>
+			<button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="patientForm.invalid">{{patient.ID.length == 0 ? 'Register new patient' : 'Save' }}</button>
 		</form>
 	</div>
 </div>

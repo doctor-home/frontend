@@ -28,7 +28,7 @@ export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 		if ( this.needPull == true ) {
 			this.needPull = false;
 			console.log('Fetching reports for ' + this.patient.Name);
-			this.reportService.getForPatient(this.patient.PatientID).subscribe(item => {
+			this.reportService.getForPatient(this.patient.ID).subscribe(item => {
 				this.reports = item;
 			});
 		}

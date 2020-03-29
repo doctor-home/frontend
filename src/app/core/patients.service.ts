@@ -1,83 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Patient,PatientAdapter } from './patient.model' ;
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
 	providedIn: 'root'
 })
 
 export class PatientsService {
+	private baseURL = environment.apiEndpoint + '/api/dah/v0';
 
-	private stubListData = new Observable(subscribers => {
-		subscribers.next([
-			{
-				name: 'John Doe',
-				patientID: 'john1',
-				phone: '+41 79 123 45 67',
-				MLTriage: 'good',
-				language: 'en',
-				treated: false,
-				lastReport: {
-					date: '2020-03-28T13:42:34Z',
-					hearthBeat: 86,
-					oxygenation: 97,
-					breathingRate: 12,
-				},
-				daysUnderInspection: 6,
-			},
-			{
-				name: 'Jean-Jacques Martin',
-				patientID: 'jj',
-				phone: '+33 79 123 45 67',
-				MLTriage: 'emergency',
-				language: 'fr',
-				treated: true,
-				lastReport: {
-					date: '2020-03-28T13:42:34Z',
-					hearthBeat: 96,
-					oxygenation: 90,
-					breathingRate: 44,
-				},
-				daysUnderInspection: 2,
-			},
-
-			{
-				name: 'Anna Smith',
-				patientID: 'anna2',
-				phone: '+41 79 321 45 46',
-				MLTriage: 'emergency',
-				language: 'en',
-				treated: false,
-				daysUnderInspection: 1,
-			}
-		]);
-	});
-
-	private stubData = new Observable( subscribers => {
-		subscribers.next({
-			name: 'John Doe',
-			patientID: 'foo',
-			phone: '+41 79 123 45 67',
-			MLTriage: 'good',
-			language: 'en',
-			treated: false,
-			lastReport: {
-				date: '2020-03-28T13:42:34Z',
-				hearthBeat: 86,
-				oxygenation: 97,
-				breathingRate: 12,
-			},
-			daysUnderInspection: 6,
-		});
-	});
-
-	constructor(private patientAdapter: PatientAdapter) {
+	constructor(private patientAdapter: PatientAdapter,
+				private http: HttpClient) {
 	}
 
-	list() : Observable<Patient[]> {
-		return  this.stubListData.pipe(
+	listUntreated(clinicianID: string) : Observable<Patient[]> {
+		return this.http.get(this.baseURL + '/clinician/' + clinicianID + '/untreatedpatients').pipe(
 			map(item => {
 				let items = item as any[];
 				let res: Patient[] = [];
@@ -89,10 +29,8 @@ export class PatientsService {
 	}
 
 	getPatient(patientID: string): Observable<Patient> {
-		console.log('coucou ' + patientID);
-		return this.stubData.pipe(
+		return this.http.get(this.baseURL + '/patients/' + patientID).pipe(
 			map( item => {
-				item['patientID'] = patientID;
 				return this.patientAdapter.adapt(item);
 			}));
 	}
