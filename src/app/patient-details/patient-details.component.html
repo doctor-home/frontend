@@ -1,16 +1,48 @@
 <div class="container mt-3">
-	<div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Patient Edition">
-		<button type="button" class="btn btn-outline-primary mr-2" routerLink="/patients/{{patient.ID}}" >
-			<span class="oi oi-document" title="Edit" aria-hidden="true"></span>
-			Edit Patient Data
-		</button>
-		<button type="button" class="btn btn-primary mr-2" >
-			<span class="oi oi-phone" title="Phone" aria-hidden="true"></span>
-			Call patient now
-		</button>
-
+	<div class="d-flex border-bottom mb-3 pb-2 justify-content-between">
+		<h2 class="h5">Curves</h2>
+		<div class="btn-toolbar" role="toolbar" aria-label="Patient Edition">
+			<button type="button" class="btn btn-outline-primary mr-2" routerLink="/patients/{{patient.ID}}" >
+				<span class="oi oi-document" title="Edit" aria-hidden="true"></span>
+				Edit Patient Data
+			</button>
+			<button type="button" class="btn btn-primary mr-2" >
+				<span class="oi oi-phone" title="Phone" aria-hidden="true"></span>
+				Call patient now
+			</button>
+		</div>
 	</div>
-	<p>Days under inspection: {{patient.DaysUnderInspection}} </p>
-	<p> Phone: {{ patient.Phone }} </p>
-	<dah-health-chart [reports]="reports"></dah-health-chart>
+	<div class="mb-3">
+		<dah-health-chart  [reports]="reports"></dah-health-chart>
+	</div>
+	<div class="row">
+		<div class="col-md-6 mb-3">
+			<h2 class="mb-3 h5" >Other Medical Data</h2>
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Age:</span><span>{{patient?.Age}}</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+				<span>Preconditions:</span><span>{{patient?.Preconditions}}</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Days Under Observation:</span><span>{{patient?.DaysUnderInspection}}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-6 mb-3">
+			<h2 class="mb-3 h5" >Contact Informations</h2>
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Phone:</span><span>{{patient?.Phone}}</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+					<span>City:</span><span>{{patient?.City}}</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Language:</span><span>{{patient?.Language}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
