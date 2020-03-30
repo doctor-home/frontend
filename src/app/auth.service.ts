@@ -26,7 +26,7 @@ export class AuthService {
 
 	login(username: string, password: string): Observable<Clinician> {
 		const headers = new HttpHeaders({Authorization: 'Basic '+btoa(username+':'+password)});
-		return this.http.get('${environment.apiEndpoint}/api/dah/v0/clinician/current',
+		return this.http.get(environment.apiEndpoint + '/api/dah/v0/clinician/current',
 							 {headers: headers}).pipe(map((item) => {
 								 let clinician = this.adapter.adapt(item);
 								 clinician.AuthData = btoa(username + ':' + password );

@@ -48,7 +48,7 @@ import { fakeBackendProvider } from './fake-backend';
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
-		fakeBackendProvider
+//		fakeBackendProvider
 	],
 	bootstrap: [AppComponent]
 })
