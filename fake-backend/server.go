@@ -50,7 +50,7 @@ const AuthKey key = 0
 func HTTPAuthenticateWrap(app *App) mux.MiddlewareFunc {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.Method == "OPTIONS" || (r.Method == "POST" && r.URL.Path == "/api/dah/v0/healthreport") {
+			if r.Method == "OPTIONS" || (r.Method == "POST" && r.RequestURI == "/api/dah/v0/healthreport") {
 				h.ServeHTTP(w, r)
 				return
 			}

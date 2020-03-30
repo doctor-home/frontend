@@ -146,6 +146,7 @@ func Execute() error {
 	router.HandleFunc("/api/dah/v0/healthreport", func(w http.ResponseWriter, r *http.Request) {
 		report := &HealthReport{}
 		data, err := ioutil.ReadAll(r.Body)
+		log.Printf("Got health-report data '%s'", data)
 		if err != nil {
 			panic(err.Error())
 		}
