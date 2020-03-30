@@ -15,7 +15,7 @@ import { delay } from 'rxjs/operators';
 
 export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 	private bffPOSTURL = environment.bffEndpoint + '/outbound-call';
-	private bffECHOURL = environment.bffEndpoint + '/echo';
+	private bffECHOURL = environment.apiEndpoint + '/api/dah/v0/healthreport';
 	@Input() patient: Patient;
 
 	public reports : HealthReport[] = null;

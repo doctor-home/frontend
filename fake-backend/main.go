@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -140,6 +141,25 @@ func Execute() error {
 			w.Write([]byte("{}"))
 			return
 		}
+	}).Methods("POST")
+
+	router.HandleFunc("/api/dah/v0/healthreport", func(w http.ResponseWriter, r *http.Request) {
+		report := &HealthReport{}
+		data, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			panic(err.Error())
+		}
+		err = json.Unmarshal(data, report)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		err = app.RegisterReport(report)
+		if err != nil {
+			panic(err)
+			return
+		}
+		w.Write([]byte("{}"))
 	}).Methods("POST")
 
 	router.Use(RecoverWrap)
