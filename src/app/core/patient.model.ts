@@ -3,6 +3,17 @@ import { Adapter } from './adapter';
 
 import { HealthReport, HealthReportAdapter } from './health-report.model';
 
+export interface PatientJSON {
+    patientID: string,
+    name: string,
+	phone: string,
+	age: number,
+	city: string,
+	preconditions: string,
+	language: string,
+	under_observation: boolean,
+}
+
 export class Patient {
 
 	constructor(public ID: string,
