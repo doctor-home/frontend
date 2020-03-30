@@ -29,6 +29,7 @@ func RecoverWrap(h http.Handler) http.Handler {
 				default:
 					err = errors.New("Unknown error")
 				}
+				log.Printf("Panic Failure: %s", err.Error())
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		}()
