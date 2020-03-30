@@ -1,9 +1,9 @@
 package main
 
 type PatientSummary struct {
-	ID         string       `json:"patientID"`
-	Name       string       `json:"name"`
-	LastReport HealthReport `json:"lastReport"`
+	ID         string        `json:"patientID"`
+	Name       string        `json:"name"`
+	LastReport *HealthReport `json:"lastReport"`
 }
 
 type Patient struct {
