@@ -6,4 +6,5 @@ type Clinician struct {
 	Patients []*Patient `json:"patients"`
 	Username string     `json:"username"`
 	Password string     `json:"password"`
+	admin    bool
 }

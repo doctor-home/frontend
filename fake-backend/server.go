@@ -2,12 +2,16 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
+
+	gcontext "github.com/gorilla/context"
 )
 
 func RecoverWrap(h http.Handler) http.Handler {
@@ -38,8 +42,30 @@ func HTTPLogWrap(h http.Handler) http.Handler {
 	})
 }
 
-func HTTPAuthenticateWrap(h http.Handler) http.Handler {
+type key int
+
+const AuthKey key = 0
+
+func HTTPAuthenticateWrap(h http.Handler, app *App) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		auth := strings.SplitN(r.Header.Get("Authorization"), " ", 2)
+		if len(auth) != 2 {
+			http.Error(w, "authorization failed", http.StatusUnauthorized)
+			return
+		}
+		payload, _ := base64.StdEncoding.DecodeString(auth[1])
+		pair := strings.SplitN(string(payload), ":", 2)
+
+		if len(pair) != 2 {
+			http.Error(w, "authorization failed", http.StatusUnauthorized)
+			return
+		}
+		c := app.Authenticate(pair[0], pair[1])
+		if c == nil {
+			http.Error(w, "authorization failed", http.StatusUnauthorized)
+			return
+		}
+		gcontext.Set(r, AuthKey, c)
 		h.ServeHTTP(w, r)
 	})
 }

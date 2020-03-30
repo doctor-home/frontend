@@ -18,14 +18,20 @@ type App struct {
 }
 
 func NewApp() *App {
-	return &App{
+	res := &App{
 		clinicianPatient:     make(map[string]string),
 		Clinicians:           make(map[string]*Clinician),
 		ReportsByPatientID:   make(map[string][]*HealthReport),
 		cliniciansByUsername: make(map[string]*Clinician),
 		reportsByID:          make(map[string]*HealthReport),
 	}
-
+	res.RegisterClinician(&Clinician{
+		Name:     "Administrator",
+		Username: "default",
+		Password: "doctor_at_home",
+		admin:    true,
+	})
+	return res
 }
 
 func LoadApp(filepath string) *App {
@@ -202,6 +208,7 @@ func (a *App) RegisterClinician(c *Clinician) error {
 	}
 
 	c.ID = a.newClinicianID()
+	c.admin = false
 	a.Clinicians[c.ID] = c
 	a.cliniciansByUsername[c.Username] = c
 
@@ -228,15 +235,18 @@ func (a *App) RegisterPatient(cID string, p *Patient) error {
 	return nil
 }
 
-func (a *App) Authenticate(username, password string) bool {
+func (a *App) Authenticate(username, password string) *Clinician {
 	a.mutex.RLock()
 	defer a.mutex.RUnlock()
 
 	c, ok := a.cliniciansByUsername[username]
 	if ok == false {
-		return false
+		return nil
 	}
-	return c.Password == password
+	if c.Password == password {
+		return c
+	}
+	return nil
 }
 
 func (a *App) RegisterReport(r *HealthReport) error {
