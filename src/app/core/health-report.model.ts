@@ -42,7 +42,7 @@ export class HealthReport {
 			case 5:
 				return 'immediate assistance';
 			default:
-				return '<unknown>';
+				return 'standard';
 		}
 	}
 
@@ -57,7 +57,7 @@ export class HealthReportAdapter implements Adapter<HealthReport> {
 
 	adapt(item: any): HealthReport {
 		return new HealthReport(new Date(item.timestamp),
-								item.hearthBeat,
+								item.heartBeat,
 								item.oxygenation,
 								item.breathingRate,
 								item.temperature,
