@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 )
 
 type App struct {
@@ -13,6 +14,7 @@ type App struct {
 	ReportsByPatientID   map[string][]*HealthReport `json:"reports"`
 	cliniciansByUsername map[string]*Clinician
 	reportsByID          map[string]*HealthReport
+	mutex                sync.RWMutex
 }
 
 func NewApp() *App {
@@ -39,11 +41,13 @@ func LoadApp(filepath string) *App {
 		log.Printf("Could not parse JSON in '%s': %s", filepath, err)
 		return NewApp()
 	}
-	res.Rebuild()
+	res.rebuild()
 	return res
 }
 
 func (a *App) Save(filename string) error {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
 	f, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -57,7 +61,8 @@ func (a *App) Save(filename string) error {
 	return nil
 }
 
-func (a *App) Rebuild() {
+func (a *App) rebuild() {
+
 	a.clinicianPatient = make(map[string]string)
 	a.cliniciansByUsername = make(map[string]*Clinician)
 	a.reportsByID = make(map[string]*HealthReport)
@@ -77,7 +82,19 @@ func (a *App) Rebuild() {
 
 }
 
+func (a *App) GetReportsForPatient(ID string) ([]*HealthReport, error) {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
+	res, ok := a.ReportsByPatientID[ID]
+	if ok == false {
+		return nil, fmt.Errorf("Could not find Patient '%s'", ID)
+	}
+	return res, nil
+}
+
 func (a *App) GetPatientByID(ID string) (*Patient, error) {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
 	clinicianID, ok := a.clinicianPatient[ID]
 	if ok == false {
 		return nil, fmt.Errorf("Patient %s not found", ID)
@@ -97,6 +114,9 @@ func (a *App) GetPatientByID(ID string) (*Patient, error) {
 }
 
 func (a *App) GetAllPatientsForClinician(ID string) ([]*Patient, error) {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
+
 	c, ok := a.Clinicians[ID]
 	if ok == false {
 		return nil, fmt.Errorf("Clinician %s not found", ID)
@@ -106,6 +126,9 @@ func (a *App) GetAllPatientsForClinician(ID string) ([]*Patient, error) {
 }
 
 func (a *App) GetObservedPatientsForClinician(ID string) ([]*Patient, error) {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
+
 	c, ok := a.Clinicians[ID]
 	if ok == false {
 		return nil, fmt.Errorf("Clinician %s not found", ID)
@@ -122,6 +145,9 @@ func (a *App) GetObservedPatientsForClinician(ID string) ([]*Patient, error) {
 }
 
 func (a *App) GetClinician(ID string) (*Clinician, error) {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
+
 	c, ok := a.Clinicians[ID]
 	if ok == false {
 		return nil, fmt.Errorf("Could not found clinician '%s'", ID)
@@ -160,6 +186,9 @@ func (a *App) newReportID() string {
 }
 
 func (a *App) RegisterClinician(c *Clinician) error {
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	if len(c.Username) == 0 {
 		return fmt.Errorf("Empty username")
 	}
@@ -180,6 +209,9 @@ func (a *App) RegisterClinician(c *Clinician) error {
 }
 
 func (a *App) RegisterPatient(cID string, p *Patient) error {
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	c, err := a.GetClinician(cID)
 	if err != nil {
 		return err
@@ -196,7 +228,21 @@ func (a *App) RegisterPatient(cID string, p *Patient) error {
 	return nil
 }
 
+func (a *App) Authenticate(username, password string) bool {
+	a.mutex.RLock()
+	defer a.mutex.RUnlock()
+
+	c, ok := a.cliniciansByUsername[username]
+	if ok == false {
+		return false
+	}
+	return c.Password == password
+}
+
 func (a *App) RegisterReport(r *HealthReport) error {
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	p, err := a.GetPatientByID(r.PatientID)
 	if err != nil {
 		return err
