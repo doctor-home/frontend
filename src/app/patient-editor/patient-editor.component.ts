@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from '../core/patient.model';
 import { Clinician } from '../core/clinician.model';
 import { PatientsService } from '../core/patients.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import * as libphonenumber from 'google-libphonenumber';
 
@@ -56,8 +57,11 @@ export class PatientEditorComponent implements OnInit {
 
 	public clinician: Clinician;
 
+	error: string = '';
 	constructor(private patientsService: PatientsService,
 				private route: ActivatedRoute,
+				private router: Router,
+				private http: HttpClient,
 				fb: FormBuilder,
 				private authService: AuthService) {
 		this.nameCtrl = fb.control('',
@@ -116,6 +120,22 @@ export class PatientEditorComponent implements OnInit {
 	}
 
 	register(): void {
+		console.log( "couou");
 
+		this.patientsService.push(new Patient(
+			this.idCtrl.value,
+			this.nameCtrl.value,
+			this.phoneCtrl.value,
+			this.ageCtrl.value,
+			this.cityCtrl.value,
+			this.preconditionsCtrl.value,
+			this.languageCtrl.value,
+			true,
+			0,
+			null))
+			.subscribe((ok) => {
+				console.log( "couou");
+				this.router.navigate(["/patients"]);
+			});
 	}
 }
