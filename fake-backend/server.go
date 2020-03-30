@@ -12,6 +12,7 @@ import (
 	"sync"
 
 	gcontext "github.com/gorilla/context"
+	"github.com/gorilla/mux"
 )
 
 func RecoverWrap(h http.Handler) http.Handler {
@@ -46,28 +47,35 @@ type key int
 
 const AuthKey key = 0
 
-func HTTPAuthenticateWrap(h http.Handler, app *App) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		auth := strings.SplitN(r.Header.Get("Authorization"), " ", 2)
-		if len(auth) != 2 {
-			http.Error(w, "authorization failed", http.StatusUnauthorized)
-			return
-		}
-		payload, _ := base64.StdEncoding.DecodeString(auth[1])
-		pair := strings.SplitN(string(payload), ":", 2)
+func HTTPAuthenticateWrap(app *App) mux.MiddlewareFunc {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.Method == "OPTIONS" {
+				h.ServeHTTP(w, r)
+				return
+			}
 
-		if len(pair) != 2 {
-			http.Error(w, "authorization failed", http.StatusUnauthorized)
-			return
-		}
-		c := app.Authenticate(pair[0], pair[1])
-		if c == nil {
-			http.Error(w, "authorization failed", http.StatusUnauthorized)
-			return
-		}
-		gcontext.Set(r, AuthKey, c)
-		h.ServeHTTP(w, r)
-	})
+			auth := strings.SplitN(r.Header.Get("Authorization"), " ", 2)
+			if len(auth) != 2 {
+				http.Error(w, "authorization failed", http.StatusUnauthorized)
+				return
+			}
+			payload, _ := base64.StdEncoding.DecodeString(auth[1])
+			pair := strings.SplitN(string(payload), ":", 2)
+
+			if len(pair) != 2 {
+				http.Error(w, "authorization failed", http.StatusUnauthorized)
+				return
+			}
+			c := app.Authenticate(pair[0], pair[1])
+			if c == nil {
+				http.Error(w, "authorization failed", http.StatusUnauthorized)
+				return
+			}
+			gcontext.Set(r, AuthKey, c)
+			h.ServeHTTP(w, r)
+		})
+	}
 }
 
 func runServer(srv *http.Server, wg *sync.WaitGroup, logPrefix string) {

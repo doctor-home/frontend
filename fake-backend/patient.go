@@ -10,7 +10,7 @@ type Patient struct {
 	ID                  string         `json:"patientID"`
 	Name                string         `json:"name"`
 	Phone               string         `json:"phone"`
-	Age                 int32          `json:"age"`
+	Age                 int32          `json:"age,string"`
 	City                string         `json:"city"`
 	Language            string         `json:"language"`
 	Summary             PatientSummary `json:"summary"`
@@ -20,4 +20,13 @@ type Patient struct {
 	Smoker              bool           `json:"smoker"`
 	ClinicianID         string         `json:"clinicianID"`
 	UnderObservation    bool           `json:"under_observation"`
+}
+
+func (p *Patient) Merge(o Patient) {
+	p.Name = o.Name
+	p.Phone = o.Phone
+	p.Age = o.Age
+	p.City = o.City
+	p.Language = o.Language
+	p.Preconditions = o.Preconditions
 }

@@ -39,13 +39,17 @@ func LoadApp(filepath string) *App {
 	f, err := os.Open(filepath)
 	if err != nil {
 		log.Printf("Could not open '%s': %s", filepath, err)
+		res.rebuild()
+		return res
 	}
 	defer f.Close()
 	dec := json.NewDecoder(f)
 	err = dec.Decode(res)
 	if err != nil {
 		log.Printf("Could not parse JSON in '%s': %s", filepath, err)
-		return NewApp()
+		res = NewApp()
+		res.rebuild()
+		return res
 	}
 	res.rebuild()
 	return res
@@ -95,6 +99,9 @@ func (a *App) GetReportsForPatient(ID string) ([]*HealthReport, error) {
 	if ok == false {
 		return nil, fmt.Errorf("Could not find Patient '%s'", ID)
 	}
+	if res == nil {
+		return make([]*HealthReport, 0), nil
+	}
 	return res, nil
 }
 
@@ -128,6 +135,9 @@ func (a *App) GetAllPatientsForClinician(ID string) ([]*Patient, error) {
 		return nil, fmt.Errorf("Clinician %s not found", ID)
 	}
 
+	if c.Patients == nil {
+		return make([]*Patient, 0), nil
+	}
 	return c.Patients, nil
 }
 
@@ -147,6 +157,9 @@ func (a *App) GetObservedPatientsForClinician(ID string) ([]*Patient, error) {
 		res = append(res, p)
 	}
 
+	if res == nil {
+		return make([]*Patient, 0), nil
+	}
 	return res, nil
 }
 
@@ -216,13 +229,14 @@ func (a *App) RegisterClinician(c *Clinician) error {
 }
 
 func (a *App) RegisterPatient(cID string, p *Patient) error {
-	a.mutex.Lock()
-	defer a.mutex.Unlock()
-
 	c, err := a.GetClinician(cID)
 	if err != nil {
 		return err
 	}
+
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	if p.Summary.LastReport != nil {
 		return fmt.Errorf("New patient cannot have reports")
 	}
@@ -250,13 +264,13 @@ func (a *App) Authenticate(username, password string) *Clinician {
 }
 
 func (a *App) RegisterReport(r *HealthReport) error {
-	a.mutex.Lock()
-	defer a.mutex.Unlock()
-
 	p, err := a.GetPatientByID(r.PatientID)
 	if err != nil {
 		return err
 	}
+
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
 
 	ID := a.newReportID()
 	r.ID = ID
