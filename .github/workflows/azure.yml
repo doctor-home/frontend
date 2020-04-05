@@ -2,14 +2,12 @@
 # see https://github.com/Azure/webapps-container-deploy
 #
 # Prereqs: 
-# AZURE_CREDENTIALS
-# REGISTRY_USERNAME
-# REGISTRY_PASSWORD
-3
 # - Create Service Principal for RBAC
-# az ad sp create-for-rbac --name "${WEBAPP_NAME}" --role contributor \
-#                             --scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} \
-#                             --sdk-auth
+# $WEBAPP_NAME="doctor-at-home-frontend"
+# $SUBSCRIPTION_ID="4d2e2806-c9d6-452f-a871-1ff7d37ad610"
+# $RESOURCE_GROUP="doc-at-home-rg"
+#
+# az ad sp create-for-rbac --name "${WEBAPP_NAME}" --role contributor --scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} --sdk-auth
 #    Add this as a AZURE_CREDENTIALS secret in Github 
 # - Azure Container Registry
 #   doctorathome.azurecr.io
