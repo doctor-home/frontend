@@ -39,13 +39,13 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        docker build . -t doctorathome.azurecr.io/frontend:${{ github.sha }}
-        docker push doctorathome.azurecr.io/frontend:${{ github.sha }} 
+        docker build . -t doctorathome.azurecr.io/frontend:latest
+        docker push doctorathome.azurecr.io/frontend:latest 
       
     - uses: azure/webapps-container-deploy@v1
       with:
         app-name: 'doctor-at-home-frontend'
-        images: 'doctorathome.azurecr.io/frontend:${{ github.sha }}'
+        images: 'doctorathome.azurecr.io/frontend:latest
     
     - name: Azure logout
       run: |
