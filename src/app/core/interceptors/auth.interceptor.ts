@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
 		if ( currentClinician && currentClinician.AuthData ) {
 			request = request.clone({
 				setHeaders: {
-					Authorization: 'Basic ' + currentClinician.AuthData
+					Authorization: 'Bearer ' + currentClinician.AuthData
 				}
 			});
 		}
