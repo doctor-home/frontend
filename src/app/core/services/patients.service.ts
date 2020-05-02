@@ -18,19 +18,22 @@ export class PatientsService {
 	}
 
 	listUntreated(clinicianID: string) : Observable<Patient[]> {
-		return this.http.get(this.baseURL + '/clinician/' + clinicianID + '/untreatedpatients').pipe(
+		return this.http.get(this.baseURL + '/clinicians/' + clinicianID + '/patients').pipe(
 			map(item => {
 				let items = item as any[];
 				let res: Patient[] = [];
 				for ( let i of items) {
-					res.push(this.patientAdapter.adapt(i));
+					const p: Patient = this.patientAdapter.adapt(i);
+					if ( p.UnderObservation == true ) {
+						res.push(p);
+					}
 				}
 				return res;
 			}));
 	}
 
 	listAll(clinicianID: string) : Observable<Patient[]> {
-		return this.http.get(this.baseURL + '/clinician/' + clinicianID + '/patients').pipe(
+		return this.http.get(this.baseURL + '/clinicians/' + clinicianID + '/patients').pipe(
 			map(item => {
 				let items = item as any[];
 				let res: Patient[] = [];
@@ -58,6 +61,6 @@ export class PatientsService {
 								 "city": p.City,
 								 "preconditions": p.Preconditions,
 								 "under_observation": p.UnderObservation};
-		return this.http.post(this.baseURL + '/patient',data);
+		return this.http.post(this.baseURL + '/patients',data);
 	}
 }
