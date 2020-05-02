@@ -1,9 +1,10 @@
 ### STAGE 1: Build ###
 FROM node:13-alpine3.10 AS build
 WORKDIR /usr/src/app
-COPY . .
+COPY package.json .
 RUN npm install --no-package-lock
 RUN npm install -g @angular/cli
+COPY . .
 RUN ng build --prod
 
 ### STAGE 2: Run ###
