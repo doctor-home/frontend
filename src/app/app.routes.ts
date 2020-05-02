@@ -5,7 +5,7 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 import { PatientEditorComponent } from './patient-editor/patient-editor.component';
 import { LoginComponent } from './login/login.component';
 
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from '@guards/auth.guard';
 
 export const ROUTES: Routes = [
 	{ path: '', component: HomeComponent },

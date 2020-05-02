@@ -19,9 +19,8 @@ import { HealthChartComponent } from './health-chart/health-chart.component';
 import { PatientEditorComponent } from './patient-editor/patient-editor.component';
 import { LoginComponent } from './login/login.component';
 
-import { AuthInterceptor }  from './auth.interceptor';
+import { AuthInterceptor }  from '@interceptors/auth.interceptor';
 
-import { fakeBackendProvider } from './fake-backend';
 
 @NgModule({
 	declarations: [
@@ -47,8 +46,6 @@ import { fakeBackendProvider } from './fake-backend';
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-
-//		fakeBackendProvider
 	],
 	bootstrap: [AppComponent]
 })

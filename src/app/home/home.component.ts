@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Clinician } from '../core/clinician.model';
-import { AuthService } from '../auth.service';
+import { Clinician } from '@models/clinician.model';
+import { AuthService } from '@services/auth.service';
 
 @Component({
 	selector: 'dah-home',

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Patient } from '../core/patient.model';
-import { Clinician } from '../core/clinician.model';
-import { PatientsService } from '../core/patients.service';
+import { Patient } from '@models/patient.model';
+import { Clinician } from '@models/clinician.model';
+import { PatientsService } from '@services/patients.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import * as libphonenumber from 'google-libphonenumber';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '@services/auth.service';
 
 export class PhoneValidator {
 	static validCountryPhone = (): ValidatorFn => {

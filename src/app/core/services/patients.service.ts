@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Patient,PatientJSON,PatientAdapter } from './patient.model' ;
+import { Patient,PatientJSON,PatientAdapter } from '@models/patient.model' ;
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map,first } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 
 
 @Injectable({

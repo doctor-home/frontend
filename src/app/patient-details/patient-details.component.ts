@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
-import { Patient } from '../core/patient.model';
-import { HealthReport } from '../core/health-report.model';
-import { HealthReportsService } from '../health-reports.service';
+import { Patient } from '@models/patient.model';
+import { HealthReport } from '@models/health-report.model';
+import { HealthReportsService } from '@services/health-reports.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 import { Observable,throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 

@@ -3,9 +3,9 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-import { Clinician } from './core/clinician.model';
-import { Patient } from './core/patient.model';
-import { HealthReport } from './core/health-report.model';
+import { Clinician } from '@models/clinician.model';
+import { Patient } from '@models/patient.model';
+import { HealthReport } from '@models/health-report.model';
 
 const users: Clinician[] = [new Clinician('johndoe1', 'John Doe',[],'test','test','')];
 

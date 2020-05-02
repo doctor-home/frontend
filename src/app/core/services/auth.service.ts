@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Clinician,ClinicianAdapter }  from './core/clinician.model';
+import { Clinician,ClinicianAdapter }  from '@models/clinician.model';
 
 
 @Injectable({

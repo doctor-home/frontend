@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HealthReport } from '../core/health-report.model';
+import { HealthReport } from '@models/health-report.model';
 import { ChartDataSets, ChartType, ChartOptions, ChartPoint } from 'chart.js';
 
 @Component({
