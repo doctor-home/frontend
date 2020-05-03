@@ -60,7 +60,15 @@ export class PatientsService {
 								 "age": p.Age,
 								 "city": p.City,
 								 "preconditions": p.Preconditions,
+								 "fitness": p.Fitness,
 								 "under_observation": p.UnderObservation};
-		return this.http.post(this.baseURL + '/patients',data);
+		if ( p.ID.length == 0 ) {
+			return this.http.post(this.baseURL + '/patients',data);
+		} else {
+			return this.http.put(this.baseURL + '/patients',data);
+		}
 	}
+
+
+
 }

@@ -42,7 +42,7 @@ export class PhoneValidator {
 
 export class PatientEditorComponent implements OnInit {
 
-	public patient: Patient = new Patient('','','',0,'','','',true,0, null);
+	public patient: Patient = new Patient('','','',0,'','','',true,0, 0,null);
 
 
 	public nameCtrl : FormControl;
@@ -52,6 +52,8 @@ export class PatientEditorComponent implements OnInit {
 	public ageCtrl : FormControl;
 	public cityCtrl : FormControl;
 	public preconditionsCtrl : FormControl;
+	public fitnessCtrl : FormControl;
+
 
 	public patientForm: FormGroup;
 
@@ -72,7 +74,7 @@ export class PatientEditorComponent implements OnInit {
 		]);
 		this.languageCtrl = fb.control('',[
 			Validators.required,
-			Validators.pattern('fr|de|en|it'),
+			Validators.pattern('French|German|English|Italian|Dutch'),
 		]);
 		this.idCtrl = fb.control('');
 		this.ageCtrl = fb.control('',
@@ -83,6 +85,8 @@ export class PatientEditorComponent implements OnInit {
 								   [Validators.required]);
 		this.preconditionsCtrl = fb.control('');
 
+		this.fitnessCtrl = fb.control('');
+
 		this.patientForm = fb.group({
 			name: this.nameCtrl,
 			phone: this.phoneCtrl,
@@ -90,8 +94,10 @@ export class PatientEditorComponent implements OnInit {
 			language: this.languageCtrl,
 			age: this.ageCtrl,
 			city: this.cityCtrl,
+			fitness: this.fitnessCtrl,
 			preconditions: this.preconditionsCtrl,
 		});
+
 
 	}
 
@@ -114,13 +120,13 @@ export class PatientEditorComponent implements OnInit {
 					this.ageCtrl.setValue(patient.Age);
 					this.cityCtrl.setValue(patient.City);
 					this.preconditionsCtrl.setValue(patient.Preconditions);
+					this.fitnessCtrl.setValue(patient.Fitness);
 				});
 			}
 		});
 	}
 
 	register(): void {
-		console.log( "couou");
 
 		this.patientsService.push(new Patient(
 			this.idCtrl.value,
@@ -132,6 +138,7 @@ export class PatientEditorComponent implements OnInit {
 			this.languageCtrl.value,
 			true,
 			0,
+			this.fitnessCtrl.value,
 			null))
 			.subscribe((ok) => {
 				console.log( "couou");
