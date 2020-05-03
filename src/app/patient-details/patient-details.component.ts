@@ -14,8 +14,8 @@ import { delay } from 'rxjs/operators';
 })
 
 export class PatientDetailsComponent implements OnInit , AfterContentChecked{
-	private bffPOSTURL = environment.bffEndpoint + '/outbound-call';
-	private bffECHOURL = environment.apiEndpoint + '/api/dah/v0/healthreport';
+	private callURL = environment.apiEndpoint + '/api/dah/call';
+
 	@Input() patient: Patient;
 
 	public reports : HealthReport[] = null;
@@ -54,12 +54,7 @@ export class PatientDetailsComponent implements OnInit , AfterContentChecked{
 		this.status = 'Calling ' + this.patient.Name;
 		this.error = '';
 
-		this.http.post(this.bffPOSTURL,{
-			'from': '+1 404 666 8654',
-			'to': this.patient.Phone,
-			'patientID': this.patient.ID,
-			'webhook': this.bffECHOURL,
-		}).subscribe(
+		this.http.post(this.callURL + '/' + this.patient.ID,{}).subscribe(
 			(resp)=> {
 				this.ddelay(100000).then(any => {
 					this.status = '';
