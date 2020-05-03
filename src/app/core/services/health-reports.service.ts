@@ -25,6 +25,9 @@ export class HealthReportsService {
 				for ( let i of items) {
 					res.push(this.reportAdapter.adapt(i));
 				}
+				res.sort((a,b) => a.Date.getTime() - b.Date.getTime());
+
+
 				return res;
 			}));
 	}
