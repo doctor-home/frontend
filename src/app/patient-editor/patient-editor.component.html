@@ -35,10 +35,11 @@
 				<div class="mb-3">
 					<label for="name">Language</label>
 					<select class="form-control" [ngClass]="{ 'is-invalid': languageCtrl.dirty && languageCtrl.invalid}" id="language" formControlName="language">
-						<option value="en">English</option>
-						<option value="fr">Français</option>
-						<option value="de">Deutsch</option>
-						<option value="it">Italiano</option>
+						<option value="English">English</option>
+						<option value="French">French</option>
+						<option value="German">German</option>
+						<option value="Dutch">Dutch</option>
+						<option value="Italian">Italian</option>
 					</select>
 					<div *ngIf="languageCtrl.dirty && languageCtrl.invalid">
 						<div class="invalid-feedback" *ngIf="languageCtrl.hasError('required')" >

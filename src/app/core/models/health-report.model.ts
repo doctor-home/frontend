@@ -61,6 +61,6 @@ export class HealthReportAdapter implements Adapter<HealthReport> {
 								item.oxygenation,
 								item.breathingRate,
 								item.temperature,
-								item.ML_Triage);
+								item.ml_triage);
 	}
 }

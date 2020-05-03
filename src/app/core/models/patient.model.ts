@@ -8,6 +8,7 @@ export interface PatientJSON {
     name: string,
 	phone: string,
 	age: number,
+	fitness: number,
 	city: string,
 	preconditions: string,
 	language: string,
@@ -25,6 +26,7 @@ export class Patient {
 				public Language: string,
 				public UnderObservation: boolean,
 				public DaysUnderInspection: number,
+				public Fitness: number,
 				public LastReport: HealthReport) {
 	}
 
@@ -39,8 +41,8 @@ export class PatientAdapter implements Adapter<Patient> {
 
 	adapt(item: any): Patient {
 		let lastReport: HealthReport = null;
-		if ( item.summary && item.summary.lastReport ) {
-			lastReport = this.reportAdapter.adapt(item.summary.lastReport);
+		if ( item.patientSummary && item.patientSummary.lastReport ) {
+			lastReport = this.reportAdapter.adapt(item.patientSummary.lastReport);
 		}
 		return new Patient(item.patientID,
 						   item.name,
@@ -51,6 +53,7 @@ export class PatientAdapter implements Adapter<Patient> {
 						   item.language,
 						   item.under_observation,
 						   item.daysUnderInspection,
+						   item.fitness,
 						   lastReport);
 	}
 
